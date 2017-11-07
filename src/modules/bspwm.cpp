@@ -158,7 +158,7 @@ namespace modules {
 
     string data{m_subscriber->receive(BUFSIZ)};
     bool result = false;
-
+	m_log.warn("data: %s", data);
     for (auto&& status_line : string_util::split(data, '\n')) {
       // Need to return true if ANY of the handle_status calls
       // return true

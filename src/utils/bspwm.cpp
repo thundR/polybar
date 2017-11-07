@@ -73,7 +73,9 @@ namespace bspwm_util {
     string env_path;
 
     if (!(env_path = env_util::get("BSPWM_SOCKET")).empty()) {
+      std::cout << "method1: " << env_path << "\n";
       return env_path;
+    
     }
 
     struct sockaddr_un sa {};
@@ -82,14 +84,15 @@ namespace bspwm_util {
     int scr = 0;
 
     if (xcb_parse_display(nullptr, &host, &dsp, &scr) == 0) {
+      std::cout << "method2" << BSPWM_SOCKET_PATH << "\n";
       return BSPWM_SOCKET_PATH;
     }
 
     snprintf(sa.sun_path, sizeof(sa.sun_path), "/tmp/bspwm%s_%i_%i-socket", host, dsp, scr);
     free(host);
-
+    std::cout << "method3" << sa.sun_path << "\n";
     return sa.sun_path;
-  }
+  } 
 
   /**
    * Generate a payload object with properly formatted data
